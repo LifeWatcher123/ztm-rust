@@ -8,4 +8,17 @@
 // * Use a function to display your last name
 // * Use the println macro to display messages to the terminal
 
-fn main() {}
+// const first_name: &str = "Christian Louise";
+
+fn display_first_name() {
+    println!("Christian Louise");
+}
+
+fn display_last_name() {
+    println!("Aranas");
+}
+
+fn main() {
+    display_first_name();
+    display_last_name();
+}

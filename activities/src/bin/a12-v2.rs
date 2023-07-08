@@ -16,41 +16,54 @@ enum Color {
     GREEN,
 }
 
-struct Box {
+impl Color {
+    fn string(&self) -> &str {
+        match self {
+            Color::RED => "Red",
+            Color::BLUE => "Blue",
+            Color::GREEN => "Green",
+        }
+    }
+}
+
+struct Dimension {
     width: f64,
     height: f64,
     length: f64,
+}
+
+struct Box {
+    dimensions: Dimension,
     weight: f64,
     color: Color,
 }
 
 impl Box {
-    fn new_box(width: f64, height: f64, length: f64, weight: f64, color: Color) -> Self {
+    fn new(width: f64, height: f64, length: f64, weight: f64, color: Color) -> Self {
+        let dimensions = Dimension {
+            width,
+            height,
+            length,
+        };
+
         Self {
             // It seems shorthand initialization is a thing.
             // It works if the parameter names and the struct field names is the same.
-            width,
-            height: height,
-            length,
+            dimensions: dimensions,
             weight: weight,
             color,
         }
     }
 
     fn print_characteristics(&self) {
-        let color_txt = match self.color {
-            Color::RED => "Red",
-            Color::BLUE => "Blue",
-            Color::GREEN => "Green",
-        };
         println!(
             "Box: {{\n\twidth: {:?}\n\theight: {:?}\n\tlength: {:?}\n\tweight: {:?}\n\tcolor: {:?}\n}}",
-            self.width, self.height, self.length, self.weight, color_txt
+            self.dimensions.width, self.dimensions.height, self.dimensions.length, self.weight, self.color.string()
         );
     }
 }
 
 fn main() {
-    let box_obj = Box::new_box(24.0, 24.0, 10.5, 96.5, Color::GREEN);
+    let box_obj = Box::new(24.0, 24.0, 10.5, 96.5, Color::GREEN);
     box_obj.print_characteristics();
 }
