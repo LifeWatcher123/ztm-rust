@@ -13,12 +13,20 @@
 fn main() {
     let x = vec![10, 20, 30, 40];
 
-    for &i in &x {
+    for i in &x {
+        // Answer from crash course
+        // match i {
+        //     30 => println!("thirty"),
+        //     _ => println!("{:?}", i),
+        // }
+        // continue;
+
         if i == 30 {
             println!("thirty");
             continue;
         }
         println!("{:?}", i);
     }
+
     println!("\nLength: {:?}", x.len());
 }
