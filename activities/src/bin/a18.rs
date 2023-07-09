@@ -16,4 +16,33 @@
 //   * For the Ok variant, print any message you want
 //   * For the Err variant, print out the error message
 
-fn main() {}
+#[derive(Debug)]
+struct Adult {
+    name: String,
+    age: i32,
+}
+
+impl Adult {
+    // Crash course answer instead used a &str instead of String as an argument here.
+    // That would reduce the usage of to_owned when calling the new function.
+    fn new(name: String, age: i32) -> Result<Self, String> {
+        if age >= 21 {
+            return Result::Ok(Self { name, age });
+        }
+        return Result::Err("Failed to create Adult (Reason: age is >= 21)".to_owned());
+    }
+}
+
+fn main() {
+    let results_adult = vec![
+        Adult::new("Dan".to_owned(), 24),
+        Adult::new("Christopher".to_owned(), 20),
+    ];
+
+    for result in results_adult {
+        match result {
+            Result::Ok(adult) => println!("Adult {:?} created. \n{:?}", adult.name, adult),
+            Result::Err(errmsg) => println!("{:?}", errmsg),
+        }
+    }
+}
