@@ -15,6 +15,7 @@ enum Ticket {
     Backstage(TicketInfo),
     Vip(TicketInfo),
     Standard(f64),
+    // Course answer used two data in an enum, removing the need for another struct.
 }
 
 struct TicketInfo {
@@ -49,14 +50,15 @@ fn main() {
 
     for ticket in tickets {
         match ticket {
+            // Match arms can point to an bracket for multiline actions.
             Ticket::Standard(price) => println!("Standard Ticket (Price: {:?})", price),
-            Ticket::Vip(ticket) => println!(
+            Ticket::Vip(ticket_info) => println!(
                 "VIP Ticket (Owned by {:?} | Price: {:?})",
-                ticket.holder_name, ticket.price
+                ticket_info.holder_name, ticket_info.price
             ),
-            Ticket::Backstage(ticket) => println!(
+            Ticket::Backstage(ticket_info) => println!(
                 "Backstage Ticket (Owned by {:?} | Price: {:?})",
-                ticket.holder_name, ticket.price
+                ticket_info.holder_name, ticket_info.price
             ),
         }
     }
