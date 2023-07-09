@@ -96,6 +96,22 @@ fn authorize(
     employee_name: &str,
     location: ProtectedLocation,
 ) -> Result<AuthorizationStatus, String> {
+    //     1. Connect to the database
+    let db: Database = Database::connect()?;
+    //     2. Find the employee with the `find_employee` database function
+    let employee: Employee = db.find_employee(employee_name)?;
+    //     3. Get a keycard with the `get_keycard` database function
+    let keycard: KeyCard = db.get_keycard(&employee)?;
+    //     4. Determine if the keycard's `access_level` is sufficient, using the
+    //        `required_access_level` function implemented on `ProtectedLocation`.
+    //        * Higher `access_level` values grant more access to `ProtectedLocations`.
+    //          1000 can access 1000 and lower. 800 can access 500 but not 1000, ...
+    if keycard.access_level >= location.required_access_level() {
+        Result::Ok(AuthorizationStatus::Allow)
+    } else {
+        Result::Ok(AuthorizationStatus::Deny)
+    }
+
     // put your code here
 }
 
